@@ -1,8 +1,7 @@
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from graph_reader import *
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    img_matrix, scale, length, force_pos, force_dir = get_info()
+
+    print("Done!")

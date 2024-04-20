@@ -64,7 +64,7 @@ def show_image(ctr_y, ctr_z, theta, axis_length, scale, pull_max, push_max):
 
 
 # 设定一系列转角用于测试
-theta = [i * (math.pi / 6) for i in range(13)]
+theta = [i * (math.pi / 6) for i in range(3)]
 
 for i in theta:
     # 显示图像
