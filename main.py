@@ -9,4 +9,3 @@ if __name__ == '__main__':
     # 计算面积与形心，定义为全局变量，可随意调用
     get_centroid(img_matrix, scale)
 
-    print("Done!")
