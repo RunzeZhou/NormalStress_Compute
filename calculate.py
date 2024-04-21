@@ -54,6 +54,7 @@ def moi_origin(img_mat):
 
 
 def get_theta_moip(img_mat):
+    # 计算形心主轴的转动角度与形心主矩
     global theta, i_yp, i_zp
 
     i_y, i_z, i_yz = moi_origin(img_mat)
@@ -75,7 +76,7 @@ def force_normalize(force_pos, force_dir):
     fz = fz_o * cos(theta) + fy_o * sin(theta)
     my = - fy * z + fx * y
     mz = fz * y - fx * z
-    return [x, y, z], [fx, fy, fz], [my, mz]
+    return x, [fx, fy, fz], [my, mz]
 
 
 def get_coordinate(i, j, scale):
@@ -88,16 +89,15 @@ def get_coordinate(i, j, scale):
 
 
 def single_n_stress(fx, my, mz, i, j, scale):
-    # 计算某一点的正应力
+    # 计算截面上某一点的正应力
     y, z = get_coordinate(i, j, scale)
     ns = fx / area - (mz * y / i_zp) + (my * z / i_yp)
     return ns
 
 
-def calculate_stress_distribute(position, force, moment, cal_x, scale):
+def calculate_stress_distribute(x, force, moment, cal_x, scale):
     # 计算截面的正应力分布
     n_stress_mat = np.zeros((y_len, z_len))
-    x, y, z = position[0], position[1], position[2]
     fx, fy, fz = force[0], force[1], force[2]
     my, mz = moment[0], moment[1]
 
@@ -106,6 +106,7 @@ def calculate_stress_distribute(position, force, moment, cal_x, scale):
     else:
         my = my - fz * (x - cal_x)  # 将作用力和力矩简化到所研究的截面
         mz = mz + fy * (x - cal_x)
+        # 逐一计算每一个小格子的正应力
         for i in range(y_len):
             for j in range(z_len):
                 n_stress_mat[i, j] = single_n_stress(fx, my, mz, i, j, scale)
@@ -115,17 +116,21 @@ def calculate_stress_distribute(position, force, moment, cal_x, scale):
 
 def normal_stress_calculate(scale, length, force_pos, force_dir):
     # 获取力的作用截面上的分力与力矩
-    position, force, moment = force_normalize(force_pos, force_dir)
+    x, force, moment = force_normalize(force_pos, force_dir)
 
     # 获取所研究的截面的位置
+    cal_x = x
     while True:
-        c = input("请输入所研究的截面的坐标(输入q以退出)：")
+        c = input("请输入所研究的截面的坐标(mm)(输入q以退出)：")
         if c == 'q' or c == 'Q':
             break
-        cal_x = float(c)
+        cal_x = float(c) / 1000
         # 研究的截面在梁之外，使用户重新输入
         if (cal_x > length) or (cal_x < 0):
             print("错误：截面不在梁上")
             continue
         else:
-            return calculate_stress_distribute(position, force, moment, cal_x, scale)
+            break
+
+    # 返回截面正应力分布矩阵
+    return calculate_stress_distribute(x, force, moment, cal_x, scale)
