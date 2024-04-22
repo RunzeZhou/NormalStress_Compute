@@ -35,7 +35,3 @@ plt.text(ctr_y - 40, ctr_z, 'Z', fontsize=16, color='Black')  # 在形心处添�
 
 plt.plot([ctr_y, ctr_y], [ctr_z - 40, ctr_z + 40], color='black', linewidth=1)  # 在原图上添加Y轴
 plt.plot([ctr_y - 40, ctr_y + 40], [ctr_z, ctr_z], color='black', linewidth=1)  # 在原图上添加Z轴
-
-
-
-

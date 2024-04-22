@@ -30,6 +30,8 @@ def get_centroid(img_mat, scale):
     y_c = s_y / area
     z_c = s_z / area
 
+    return y_c, z_c, area
+
 
 def moi_origin(img_mat):
     # 计算原始坐标轴的惯性矩与惯性积

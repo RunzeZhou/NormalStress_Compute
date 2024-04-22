@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70aaf60a-43a4-42d4-852d-5073216e5792" name="Changes" comment="" />
+    <list default="true" id="70aaf60a-43a4-42d4-852d-5073216e5792" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/NormalStress_Compute.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NormalStress_Compute.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/calculate.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/get_matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_matrix.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph_reader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project_UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/project_UI.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +47,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="NormalStress_Compute" />
       <option name="INTERPRETER_OPTIONS" value="" />

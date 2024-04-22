@@ -2,12 +2,11 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-import get_matrix
 
 
-def get_image(real_intensity_matrix, cross_section_matrix):  # 获取正应力图像
+def get_image(real_intensity_matrix, cross_section_matrix, max_stress):  # 获取正应力图像
     # 根据应力矩阵元素大小赋予对应Hue值
-    H_matrix = real_intensity_matrix / 10000 * 255
+    H_matrix = real_intensity_matrix / max_stress * 255
     H_matrix_unit8 = H_matrix.astype(np.uint8)  # 确保数据类型是uint8
 
     # 根据元素值，使用cv2.applyColorMap给矩阵上色
@@ -52,9 +51,9 @@ def add_label(scale, pull_max, push_max, angle_I):
     plt.title(f'angle = {angle_I}')
 
 
-def show_image(ctr_y, ctr_z, theta, axis_length, scale, pull_max, push_max):
+def show_image(ctr_y, ctr_z, theta, axis_length, scale, pull_max, push_max,real_intensity_matrix, cross_section_matrix):
     plt.figure(figsize=(10, 10))
-    colored_image_rgb = get_image(get_matrix.real_intensity_matrix, get_matrix.cross_section_matrix)
+    colored_image_rgb = get_image(real_intensity_matrix, cross_section_matrix, max(push_max, pull_max))
     add_axis(ctr_y, ctr_z, theta, axis_length)
     add_label(scale, pull_max, push_max, theta)
 
@@ -63,6 +62,7 @@ def show_image(ctr_y, ctr_z, theta, axis_length, scale, pull_max, push_max):
     plt.show()
 
 
+"""
 # 设定一系列转角用于测试
 theta = [i * (math.pi / 6) for i in range(3)]
 
@@ -71,3 +71,4 @@ for i in theta:
     show_image(50, 50, i, 40, '10 mm/mm', 50, 30)
     # 切换间隔
     plt.pause(0.5)  # 暂停0.5秒
+"""
