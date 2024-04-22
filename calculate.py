@@ -23,14 +23,14 @@ def get_centroid(img_mat, scale):
                 y = 0.5 * y_len - i
                 z = j - 0.5 * z_len
                 area += d_a
-                s_y = s_y + y * d_a
-                s_z = s_z + z * d_a
+                s_y = s_y + y * d_a * scale
+                s_z = s_z + z * d_a * scale
 
     # 计算形心坐标
     y_c = s_y / area
     z_c = s_z / area
 
-    return y_c, z_c, area
+    return y_c, z_c, area, y_len, z_len, d_a
 
 
 def moi_origin(img_mat):
