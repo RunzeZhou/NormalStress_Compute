@@ -23,7 +23,6 @@ def image2matrix(img, y_range):
                 im[i, j] = 0
 
     # 计算图形比例尺，即每像素多少米
-    y_range /= 1000
     scale = y_range / (max_y - min_y)
 
     return im, scale
@@ -32,7 +31,7 @@ def image2matrix(img, y_range):
 def get_info():
     # 获得相关参数
     # direction = input("请输入图像路径")
-    img = Image.open("images/test_H.png")
+    img = Image.open("images/test_8.png")
     # y_range = float(input("请输入截面y方向高度(mm)：")) / 1000
     y_range = 50 / 1000
     img_matrix, scale = image2matrix(img, y_range)

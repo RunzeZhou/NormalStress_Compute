@@ -2,11 +2,11 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import calculate
 
-
-def get_image(real_intensity_matrix, cross_section_matrix, max_stress):  # 获取正应力图像
+def get_image(real_intensity_matrix, cross_section_matrix, pull_max, push_max):  # 获取正应力图像
     # 根据应力矩阵元素大小赋予对应Hue值
-    H_matrix = real_intensity_matrix / max_stress * 255
+    H_matrix = (real_intensity_matrix - push_max) / (pull_max - push_max) * 255
     H_matrix_unit8 = H_matrix.astype(np.uint8)  # 确保数据类型是uint8
 
     # 根据元素值，使用cv2.applyColorMap给矩阵上色
@@ -15,8 +15,8 @@ def get_image(real_intensity_matrix, cross_section_matrix, max_stress):  # 获�
     colored_image_rgb = cv2.cvtColor(colored_image_bgr, cv2.COLOR_BGR2RGB)
 
     #  使截面之外的区域显示为白色
-    for i in range(0, 100):
-        for j in range(0, 100):
+    for i in range(0, calculate.y_len):
+        for j in range(0, calculate.z_len):
             if cross_section_matrix[i, j] == 0:
                 colored_image_rgb[i, j] = (255, 255, 255)
 
@@ -37,8 +37,8 @@ def add_axis(ctr_y, ctr_z, angle_I, axis_length):  # 在图像上添加主轴坐
     y4 = ctr_y - axis_length * math.sin(angle_I)
     z4 = ctr_z + axis_length * math.cos(angle_I)
 
-    plt.text(y1, z1, 'Z', fontsize=16, color='Black')  # 标注Z轴
-    plt.text(y2, z2, 'Y', fontsize=16, color='Black')  # 标注Y轴
+    plt.text(y1, z1, 'Z', fontsize=8, color='Black')  # 标注Z轴
+    plt.text(y2, z2, 'Y', fontsize=8, color='Black')  # 标注Y轴
 
     plt.plot([y2, y4], [z2, z4], color='black', linewidth=1)  # 在原图上添加Y轴
     plt.plot([y1, y3], [z1, z3], color='black', linewidth=1)  # 在原图上添加Z轴
@@ -53,7 +53,7 @@ def add_label(scale, pull_max, push_max, angle_I):
 
 def show_image(ctr_y, ctr_z, theta, axis_length, scale, pull_max, push_max,real_intensity_matrix, cross_section_matrix):
     plt.figure(figsize=(10, 10))
-    colored_image_rgb = get_image(real_intensity_matrix, cross_section_matrix, max(push_max, pull_max))
+    colored_image_rgb = get_image(real_intensity_matrix, cross_section_matrix, pull_max, push_max)
     add_axis(ctr_y, ctr_z, theta, axis_length)
     add_label(scale, pull_max, push_max, theta)
 

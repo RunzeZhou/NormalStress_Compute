@@ -21,10 +21,10 @@ def get_centroid(img_mat, scale):
         for j in range(z_len):
             if img_mat[i, j] == 1:
                 y = 0.5 * y_len - i
-                z = j - 0.5 * z_len
+                z = 0.5 * z_len - j
                 area += d_a
-                s_y = s_y + y * d_a * scale
-                s_z = s_z + z * d_a * scale
+                s_y += y * d_a * scale
+                s_z += z * d_a * scale
 
     # 计算形心坐标
     y_c = s_y / area
