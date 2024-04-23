@@ -136,3 +136,20 @@ def normal_stress_calculate(scale, length, force_pos, force_dir):
 
     # 返回截面正应力分布矩阵
     return calculate_stress_distribute(x, force, moment, cal_x, scale)
+
+
+def normal_stress_calculate_all(scale, length, force_pos, force_dir):
+    # 计算所有截面的应力分布
+    # 获取力的作用截面上的分力与力矩
+    x, force, moment = force_normalize(force_pos, force_dir)
+
+    # 获取所研究的截面的位置
+    step = 100
+    x_list = np.linspace(0, length, step)
+    n_mat = calculate_stress_distribute(x, force, moment, x_list[0], scale)
+    for cal_x in x_list[1:]:
+        mat = calculate_stress_distribute(x, force, moment, cal_x, scale)
+        np.array([n_mat, mat])
+
+    # 返回截面正应力分布矩阵
+    return n_mat
