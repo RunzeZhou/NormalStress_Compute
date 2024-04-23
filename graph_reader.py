@@ -31,6 +31,7 @@ def image2matrix(img, y_range):
 def get_info():
     # 获得相关参数
     # direction = input("请输入图像路径")
+    # img = Image.open(direction)
     img = Image.open("images/test_8.png")
     # y_range = float(input("请输入截面y方向高度(mm)：")) / 1000
     y_range = 50 / 1000
@@ -44,6 +45,6 @@ def get_info():
     for i in force_pos:
         i /= 1000
     # force_dir = list(map(float, input("请输入力的作用点的x、y、z分量(N)，(x,y,z)：").split(',')))
-    force_dir = [50, 50, 50]
+    force_dir = [0, 50, 50]
 
     return img_matrix, scale, length, force_pos, force_dir

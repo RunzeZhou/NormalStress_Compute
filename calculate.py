@@ -68,7 +68,7 @@ def get_theta_moip(img_mat):
 
 def force_normalize(force_pos, force_dir):
     # 获得作用力在其作用截面上，相对于形心主轴的三个力的分量与两个力矩分量
-    x_o, y_o, z_o = force_pos[0], force_pos[1], force_pos[2]
+    x_o, y_o, z_o = force_pos[0] / 1000, force_pos[1] / 1000, force_pos[2] / 1000
     fx_o, fy_o, fz_o = force_dir[0], force_dir[1], force_dir[2]
     x = x_o
     y = (y_o - y_c) * cos(theta) - (z_o - z_c) * sin(theta)
@@ -112,8 +112,7 @@ def calculate_stress_distribute(x, force, moment, cal_x, scale):
         for i in range(y_len):
             for j in range(z_len):
                 n_stress_mat[i, j] = single_n_stress(fx, my, mz, i, j, scale)
-
-    return n_stress_mat
+        return n_stress_mat
 
 
 def normal_stress_calculate(scale, length, force_pos, force_dir):
@@ -146,10 +145,13 @@ def normal_stress_calculate_all(scale, length, force_pos, force_dir):
     # 获取所研究的截面的位置
     step = 100
     x_list = np.linspace(0, length, step)
-    n_mat = calculate_stress_distribute(x, force, moment, x_list[0], scale)
-    for cal_x in x_list[1:]:
+    n_mat = np.zeros((y_len, z_len, step))
+    for n in range(step):
+        cal_x = x_list[n]
         mat = calculate_stress_distribute(x, force, moment, cal_x, scale)
-        np.array([n_mat, mat])
+        for i in range(y_len):
+            for j in range(z_len):
+                n_mat[i, j, n] = mat[i, j]
 
     # 返回截面正应力分布矩阵
     return n_mat

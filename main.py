@@ -1,6 +1,7 @@
 from graph_reader import *
 from calculate import *
 from project_UI import *
+from gif_generator import *
 
 
 def m2point(y, z):
@@ -33,3 +34,4 @@ if __name__ == '__main__':
     elif req == 'b' or req == 'B':
         many_n_mat = normal_stress_calculate_all(scale, length, force_pos, force_dir)
         max_stress, min_stress = many_n_mat.max(), many_n_mat.min()
+        gif_generator(length, theta, scale, max_stress, min_stress, img_matrix, many_n_mat)

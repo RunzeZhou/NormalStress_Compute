@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import math
 import calculate
 
+
 def get_image(real_intensity_matrix, cross_section_matrix, pull_max, push_max):  # 获取正应力图像
     # 根据应力矩阵元素大小赋予对应Hue值
     H_matrix = (real_intensity_matrix - push_max) / (pull_max - push_max) * 255
