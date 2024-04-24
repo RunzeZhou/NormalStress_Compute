@@ -1,3 +1,4 @@
+import os
 from PIL import Image
 import numpy as np
 
@@ -30,21 +31,24 @@ def image2matrix(img, y_range):
 
 def get_info():
     # 获得相关参数
-    direction = input("请输入图像路径")
-    img = Image.open(direction)
-    # img = Image.open("images/test_H.png")
-    y_range = float(input("请输入截面y方向高度(mm)：")) / 1000
-    # y_range = 50 / 1000
-    img_matrix, scale = image2matrix(img, y_range)
-    length = float(input("请输入梁的长度(mm)：")) / 1000
-    # length = 1
+    try:
+        direction = input("请输入图像路径")
+        img = Image.open(direction)
+        # img = Image.open("images/test_H.png")
+        y_range = float(input("请输入截面y方向高度(mm)：")) / 1000
+        # y_range = 50 / 1000
+        img_matrix, scale = image2matrix(img, y_range)
+        length = float(input("请输入梁的长度(mm)：")) / 1000
+        # length = 1
 
-    # 力的相关参数
-    force_pos = list(map(float, input("请输入力的作用点的x、y、z坐标(mm)，(x,y,z)：").split(',')))
-    # force_pos = [500, 0, 0]
-    for i in force_pos:
-        i /= 1000
-    force_dir = list(map(float, input("请输入力的作用点的x、y、z分量(N)，(x,y,z)：").split(',')))
-    # force_dir = [0, 50, 50]
-
-    return img_matrix, scale, length, force_pos, force_dir
+        # 力的相关参数
+        force_pos = list(map(float, input("请输入力的作用点的x、y、z坐标(mm)，(x,y,z)：").split(',')))
+        # force_pos = [500, 0, 0]
+        for i in force_pos:
+            i /= 1000
+        force_dir = list(map(float, input("请输入力的作用点的x、y、z分量(N)，(x,y,z)：").split(',')))
+        # force_dir = [0, 50, 50]
+        return img_matrix, scale, length, force_pos, force_dir
+    except Exception as e:
+        print(e)
+        os.system("pause")
