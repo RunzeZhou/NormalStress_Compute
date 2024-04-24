@@ -46,8 +46,8 @@ def add_axis(ctr_y, ctr_z, angle_I, axis_length):  # 在图像上添加主轴坐
 
 
 def add_label(scale, pull_max, push_max, angle_I):
-    plt.xlabel(f"scale: {scale}\nmax pulling stress: {pull_max}\n"
-               f"max pushing stress: {push_max}", fontsize=16)
+    plt.xlabel(f"scale: {'%.3g'%scale}\nmax pulling stress: {'%.3g'%pull_max}    "
+               f"max pushing stress: {'%.3g'%push_max}", fontsize=16)
     # 设置标题显示图像的序号
     plt.title(f'angle = {angle_I}')
 

@@ -33,7 +33,7 @@ def get_centroid(img_mat, scale):
     return y_c, z_c, area, y_len, z_len, d_a
 
 
-def moi_origin(img_mat):
+def moi_origin(img_mat, scale):
     # 计算原始坐标轴的惯性矩与惯性积
     i_y, i_z, i_yz = 0, 0, 0
 
@@ -43,9 +43,9 @@ def moi_origin(img_mat):
             if img_mat[i, j] == 1:
                 y = 0.5 * y_len - i
                 z = j - 0.5 * z_len
-                i_y += (pow(z, 2) * d_a)
-                i_z += (pow(y, 2) * d_a)
-                i_yz += (y * z * d_a)
+                i_y += (pow(z * scale, 2) * d_a)
+                i_z += (pow(y * scale, 2) * d_a)
+                i_yz += (y * z * d_a * scale * scale)
 
     # 计算相对于新坐标轴的惯性积与惯性矩
     i_y = i_y - pow(z_c, 2) * area
@@ -55,11 +55,11 @@ def moi_origin(img_mat):
     return i_y, i_z, i_yz
 
 
-def get_theta_moip(img_mat):
+def get_theta_moip(img_mat, scale):
     # 计算形心主轴的转动角度与形心主矩
     global theta, i_yp, i_zp
 
-    i_y, i_z, i_yz = moi_origin(img_mat)
+    i_y, i_z, i_yz = moi_origin(img_mat, scale)
     theta = 0.5 * (atan(-(i_yz / i_z - i_y)))
     i_yp = 0.5 * (i_y + i_z) + 0.5 * sqrt(pow((i_y - i_z), 2) + 4 * pow(i_yz, 2))
     i_zp = 0.5 * (i_y - i_z) - 0.5 * sqrt(pow((i_y - i_z), 2) + 4 * pow(i_yz, 2))
